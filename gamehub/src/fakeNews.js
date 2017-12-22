@@ -1,5 +1,5 @@
 // 20171221144128
-// http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=E28E6E93EA3CCC16BAD74D9DE556F3BC&steamid=76561198093453181&include_appinfo=1
+
 
 module.exports = {
   "response": {
