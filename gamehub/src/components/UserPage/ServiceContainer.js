@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { List, ListItem } from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
 import GameRow from './ServiceContainer/GameRow'
 
 
@@ -17,12 +19,12 @@ class ServiceContainer extends Component {
   render(){
 
     return (
-      <div className='container-fluid'>
+      <List >
         //ARRAY OF GAMEROWS
         {/* { this.props.favoriteGames[this.props.currentService.id].map( gameId => < GameRow gameId={gameId} />  ) } */}
-        {this.props.userGames.map(game => < GameRow game={game}  />)}
+        {this.props.userGames.map((game, index) => <GameRow game={game} />)}
 
-      </div>
+      </List>
     )
   }
 

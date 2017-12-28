@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import ServiceContainer from './UserPage/ServiceContainer'
+import axios from 'axios'
 let steamCall = require('../fakeNews').response
 
 
 class UserPage extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      services: [{name: 'steam'}],
-      favoriteGames:{'steam': [226700, 224760, 252950]},
-      currentService: 0,
-      userGames: {'steam': [...steamCall.games]}
+    constructor(props){
+        super(props)
+        this.state = {
+        
+        services: [{ name: 'steam', id: '6561197980971766'}],
+        favoriteGames:{'steam': [226700, 224760, 252950]},
+        currentService: 0,
+        userGames: {'steam': [...steamCall.games]}
+        }
     }
-  }
 
     render () {
         return (

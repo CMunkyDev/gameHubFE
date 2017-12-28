@@ -1,13 +1,19 @@
 import React from 'react'
+import Avatar from 'material-ui/Avatar'
+import { ListItem } from 'material-ui/List'
+import Subheader from 'material-ui/Subheader'
+import Divider from 'material-ui/Divider'
 
 const GameRow = ({game}) => {
+  let gameIconURL = `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
+  let timePlayedString = `Time Played: ${(game.playtime_forever / 60).toFixed(1)} hours`
+  let avatarStyle = {borderRadius: '25%', height:'32px', width: '32px', padding: '4px', backgroundColor: 'rgb(1,1,1)'}
   return (
-    <div className='container-fluid'>
-      <img src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}></img>
-      <span>{game.name}</span>
-      <span>Total time {(game.playtime_forever/60).toFixed(1)} hours </span>
-      <span>Last fortnight {(game.playtime_2weeks) ? (game.playtime_2weeks/60).toFixed(1) : 'Not played' }</span>
-    </div>
+    <ListItem
+      leftAvatar = {<Avatar src={gameIconURL} style={avatarStyle} />} 
+      primaryText = {game.name} 
+      secondaryText = {timePlayedString}
+    />
   )
 }
 
