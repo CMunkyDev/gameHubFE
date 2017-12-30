@@ -8,7 +8,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <UserPage />
       </MuiThemeProvider>
     )
