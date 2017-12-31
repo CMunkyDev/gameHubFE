@@ -13,7 +13,7 @@ const GameRow = ({service, muiTheme, game}) => {
   let itemStyle = {backgroundColor: muiTheme.palette.primary3Color, color: muiTheme.palette.textColor}
   return (
     <ListItem
-      leftAvatar={<Avatar src={game.img_icon_url ? gameIconURL : 'https://iconmonstr.com/wp-content/g/gd/png.php?size=32&padding=0&icon=assets/source/2014/png/iconmonstr-steam-4.png&in=iconmonstr-steam-4.png&bgShape=iconmonstr-shape-19.png&bgColorR=255&bgColorG=255&bgColorB=255&iconColorR=0&iconColorG=0&iconColorB=0'} style={avatarStyle} />} 
+      leftAvatar={<Avatar src={game.img_icon_url ? gameIconURL : 'https://iconmonstr.com/wp-content/g/gd/png.php?size=96&padding=0&icon=assets/source/2014/png/iconmonstr-steam-3.png&in=iconmonstr-steam-3.png&bgShape=iconmonstr-shape-11.png&bgColorR=255&bgColorG=255&bgColorB=255&iconColorR=0&iconColorG=0&iconColorB=0'} style={avatarStyle} />} 
       primaryText = {game.name} 
       secondaryText = {timePlayedString}
       style = {service.style.row}
