@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
 
 /************
 formObj = {
@@ -34,14 +36,14 @@ class TextForm extends Component {
     compileForm = () => {
         let compiledForm = []
         for (let inputName in this.state) {
-            compiledForm = [...compiledForm, 
-                <TextField 
+            compiledForm = [...compiledForm, <TextField 
                     type={this.state[inputName].type}
                     name={inputName}
                     value={this.state[inputName].value}
                     errorText={this.state[inputName].validationString}
                     onChange={this.handleChange(this.state[inputName].validationFunction)}
-                    floatingLabelText={inputName}
+                    fullWidth={true}
+                    hintText={inputName}
                 />
             ]
         }
