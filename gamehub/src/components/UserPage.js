@@ -4,6 +4,7 @@ import axios from 'axios'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import ServiceButtonBar from './UserPage/ServiceButtonBar'
 import SteamAPI from '../service-calls/steam'
+import LoginModal from './UserPage/LoginModal'
 
 let steamCall = require('../fakeNews').response
 
@@ -33,6 +34,7 @@ class UserPage extends Component {
     render () { 
         return (
             <div className = "container-fluid">
+                <LoginModal />
                 <div className = "row">
                     //HEADER
                 </div>
