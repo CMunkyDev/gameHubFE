@@ -3,6 +3,8 @@ import ServiceContainer from './UserPage/ServiceContainer'
 import axios from 'axios'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import ServiceButtonBar from './UserPage/ServiceButtonBar'
+import SteamAPI from '../service-calls/steam'
+
 let steamCall = require('../fakeNews').response
 
 
@@ -28,7 +30,7 @@ class UserPage extends Component {
         console.log(props.muiTheme.palette)
     }
 
-    render () {
+    render () { 
         return (
             <div className = "container-fluid">
                 <div className = "row">
