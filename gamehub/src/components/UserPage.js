@@ -39,9 +39,7 @@ class UserPage extends Component {
         axios.get(`${process.env.REACT_APP_API_URL}/api/users/current`)
             .then(response => {
                 this.setState({currentUserId: response.data.currentUser.id})
-            })
-            .then(() => {
-                return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${this.state.currentUserId}`)
+                return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}}`)
             })
             .then(idResponse => {
                 axios.post(`${process.env.REACT_APP_API_URL}/services/steam/getOwnedGames`, { steamid: idResponse.data.steamId.users_service_id, include_played_free_games: '1'})
