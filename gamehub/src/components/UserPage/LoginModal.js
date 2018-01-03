@@ -8,7 +8,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 class LoginModal extends Component {
     constructor(props) {
         super(props)
-        let registration = {
+        this.registration = {
             email: {
                 value: '',
                 validationString: '',
@@ -27,14 +27,14 @@ class LoginModal extends Component {
             passCheck: {
                 value: '',
                 validationString: '',
-                validationFunction: null
+                validationFunction: this.passwordVerificationValidation
             }
         }
-        let login = {
+        this.login = {
             email: {
                 value: '',
                 validationString: '',
-                validationFunction: this.fakeValidation
+                validationFunction: null
             },
             password: {
                 value: '',
@@ -44,8 +44,8 @@ class LoginModal extends Component {
         }
 
         this.state = {
-            registration,
-            login,
+            registration: this.registration,
+            login: this.login,
             open: false
         }
     }
@@ -55,13 +55,16 @@ class LoginModal extends Component {
     }
 
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({
+            registration: this.registration,
+            login: this.login,
+            open: false
+        });
     }
 
-    fakeValidation (string) {
-        return string
+    passwordVerificationValidation = secondPasswordInput => {
+        return this.state.registration.password.value === secondPasswordInput ? '' : `Passwords don't match`
     }
-
 
 
     //validation Function takes in the input's value and returns a validation string
@@ -164,7 +167,7 @@ class LoginModal extends Component {
                                 />
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
                                     <RaisedButton label={'Cancel'} onClick={this.handleClose}/>
-                                    <RaisedButton label={'Submit'} onClick={this.handleSubmit(this.props.registrationFormCallback, 'registraion')}/>
+                                    <RaisedButton label={'Submit'} onClick={this.handleSubmit(this.props.registrationFormCallback, 'registration')}/>
                                 </div>
                             </form>
                         </Tab>
