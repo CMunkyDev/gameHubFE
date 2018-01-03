@@ -13,28 +13,37 @@ class UserPage extends Component {
     constructor(props){
         super(props)
         this.state = {
-        
-        services: [{ name: 'steam', id: '6561197980971766', style: {
-            tab: {
-                backgroundColor: '#181A21',
-                color: '#BBBBBB'
-            },
-            row: {
-                backgroundColor: '#181A21',
-                color: '#FFF'
-            }
-        }}],
-        favoriteGames:{'steam': [226700, 224760, 252950]},
-        currentService: 0,
-        userGames: {'steam': [...steamCall.games]}
+            currentUserId: null,
+            services: [{ name: 'steam', id: '6561197980971766', style: {
+                tab: {
+                    backgroundColor: '#181A21',
+                    color: '#BBBBBB'
+                },
+                row: {
+                    backgroundColor: '#181A21',
+                    color: '#FFF'
+                }
+            }}],
+            favoriteGames:{'steam': [226700, 224760, 252950]},
+            currentService: 0,
+            userGames: {'steam': [...steamCall.games]}
         }
-        console.log(props.muiTheme.palette)
+    }
+
+    loginFormCallback = (formObject) => {
+        axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, formObject)
+            .then(console.log)
+    }
+
+    registrationFormCallback = (formObject) => {
+        axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, formObject)
+            .then(console.log)
     }
 
     render () { 
         return (
             <div className = "container-fluid">
-                <LoginModal />
+                <LoginModal loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback}/>
                 <div className = "row">
                     //HEADER
                 </div>
@@ -55,4 +64,4 @@ class UserPage extends Component {
     }
 }
 
-export default muiThemeable()(UserPage)
+export default UserPage

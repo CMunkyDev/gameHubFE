@@ -1,7 +1,3 @@
-// 20171221144128
-
-
-
 module.exports = {
   "response": {
     "game_count": 456,
