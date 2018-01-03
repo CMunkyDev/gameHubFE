@@ -71,7 +71,11 @@ class UserPage extends Component {
             console.log(fullUrl.get('openid.assoc_handle'))
             console.log(fullUrl.get('openid.signed'))
             console.log(fullUrl.get('openid.sig'))
-            console.log('Steam ID: ', fullUrl.get('openid.identity').slice(-17))
+            let steamID = fullUrl.get('openid.identity').slice(-17)
+            console.log('Steam ID: ', steamID)
+            this.addTokenToHeader()
+            axios.patch(`${process.env.REACT_APP_API_URL}/api/users/1`, { users_service_id: steamID })
+                .then(console.log)
         }
     }
 
