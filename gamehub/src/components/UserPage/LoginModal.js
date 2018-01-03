@@ -34,7 +34,7 @@ class LoginModal extends Component {
             email: {
                 value: '',
                 validationString: '',
-                validationFunction: null
+                validationFunction: this.fakeValidation
             },
             password: {
                 value: '',
@@ -56,6 +56,10 @@ class LoginModal extends Component {
 
     handleClose = () => {
         this.setState({ open: false });
+    }
+
+    fakeValidation (string) {
+        return string
     }
 
 
