@@ -37,19 +37,17 @@ class UserPage extends Component {
 
     loginFormCallback = (formObject) => {
         this.addTokenToHeader()
-        axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, formObject)
+        return axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, formObject)
             .then(response => {
                 if (response.data.authorization) {
                     localStorage.setItem('gamehubToken', response.data.authorization)
                 }
             })
-            .catch(console.log)
     }
 
     registrationFormCallback = (formObject) => {
         this.addTokenToHeader()
-        axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, formObject)
-            .then(console.log)
+        return axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, formObject)
     }
 
     render () { 

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog';
+import Paper from 'material-ui/Paper'
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import axios from 'axios'
 
 class LoginModal extends Component {
     constructor(props) {
@@ -87,7 +89,7 @@ class LoginModal extends Component {
             let stateParent = event.target.form.id
             this.setState(prev => {
                 let newValidationString = validationFunction ? validationFunction(event.target.value) : prev[stateParent][stateKey].validationString
-                return { ...prev, [stateParent]: { ...prev[stateParent], [stateKey]: {...prev[stateParent][stateKey], value: event.target.value, validationString: newValidationString} } }
+                return { ...prev, currentError: '', [stateParent]: { ...prev[stateParent], [stateKey]: {...prev[stateParent][stateKey], value: event.target.value, validationString: newValidationString} } }
             })
         }
     }
@@ -102,8 +104,20 @@ class LoginModal extends Component {
             }
             if (valid) {
                 postRequestCallback(formObject)
+                    .catch(error => {
+                        this.setState(prev => {
+                           return {
+                                ...prev,
+                                currentError: error.response.data.message
+                            }
+                        })
+                    })
             }
         }
+    }
+
+    clearError = () => {
+        this.setState({currentError: ''})
     }
 
     render() {
@@ -117,7 +131,7 @@ class LoginModal extends Component {
                     autoScrollBodyContent={true}
                 >
                     <Tabs>
-                        <Tab label="Login">
+                        <Tab label="Login" onActive={this.clearError}>
                             <form id = "login" >
                                 <TextField
                                     type="email"
@@ -143,7 +157,7 @@ class LoginModal extends Component {
                                 </div>
                             </form>
                         </Tab>
-                        <Tab label="Signup">
+                        <Tab label="Signup" onActive={this.clearError}>
                             <form id = "registration" >
                                 <TextField
                                     type="email"
@@ -188,6 +202,11 @@ class LoginModal extends Component {
                             </form>
                         </Tab>
                     </Tabs>
+                    <div style={{textAlign: 'center'}}>
+                        <div style={{color: 'red'}}>
+                            {this.state.currentError}
+                        </div>
+                    </div>
                 </Dialog>
             </div>
         )
