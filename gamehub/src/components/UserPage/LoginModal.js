@@ -164,7 +164,7 @@ class LoginModal extends Component {
                                 />
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
                                     <RaisedButton label={'Cancel'} onClick={this.handleClose}/>
-                                    <RaisedButton label={'Submit'} onClick={this.handleSubmit(this.props.registrationFormCallback, 'registraion')}/>
+                                    <RaisedButton label={'Submit'} onClick={this.handleSubmit(this.props.registrationFormCallback, 'registration')}/>
                                 </div>
                             </form>
                         </Tab>
