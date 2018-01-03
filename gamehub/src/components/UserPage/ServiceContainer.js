@@ -16,16 +16,36 @@ import muiThemeable from 'material-ui/styles/muiThemeable'
 class ServiceContainer extends Component {
   constructor(props){
     super(props)
+    console.log('service:',this.props.service)
+
+    this.state = {
+      userGames: [],
+      sortedNFilteredGames: []
+    }
+  }
+
+  componentDidMount () {
+    this.setState(prev => {
+      return { ...prev, userGames: this.props.service.gameList || [], sortedNFilteredGames: this.props.service.gameList || []}
+    })
   }
 //PRETENDING WE ARE HITTING EACH TIME
   render(){
-    if (this.props.serviceUserId) {
+    console.log('gamesListinContainer:',this.state.userGames)
+    if (this.props.service.gameList && this.props.service.gameList.length !== this.state.userGames.length) {
+      this.setState(prev => {
+        return {...prev, userGames: this.props.service.gameList, sortedNFilteredGames: this.props.service.gameList}
+      })
+    } else {
+
+    }
+    if (this.props.service.userId) {
       return (
         <div>
           <GameListToolbar />
           <List style={{ paddingTop: 0 }}>
             {/* { this.props.favoriteGames[this.props.currentService.id].map( gameId => < GameRow gameId={gameId} />  ) } */}
-            {this.props.userGames.map((game, index) => <GameRow service={this.props.service} game={game} />)}
+            {this.state.sortedNFilteredGames.map((game, index) => <GameRow service={this.props.service} game={game} />)}
 
           </List>
         </div>
