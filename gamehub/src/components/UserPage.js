@@ -14,20 +14,29 @@ class UserPage extends Component {
         super(props)
         this.state = {
             currentUserId: null,
-            services: [{ name: 'steam', id: '6561197980971766', style: {
-                tab: {
-                    backgroundColor: '#181A21',
-                    color: '#BBBBBB'
+            services: [{
+                name: 'steam',
+                id: '6561197980971766',
+                style: {
+                    tab: {
+                        backgroundColor: '#181A21',
+                        color: '#BBBBBB'
+                    },
+                    row: {
+                        backgroundColor: '#181A21',
+                        color: '#FFF'
+                    }
                 },
-                row: {
-                    backgroundColor: '#181A21',
-                    color: '#FFF'
-                }
-            }}],
+                userId: null
+            }],
             favoriteGames:{'steam': [226700, 224760, 252950]},
             currentService: 0,
             userGames: {'steam': [...steamCall.games]}
         }
+    }
+
+    componentDidMount () {
+
     }
 
     addTokenToHeader = function () {
@@ -78,15 +87,10 @@ class UserPage extends Component {
                     USER INFO
                 </div>
                 <div className = "row">
-                    <form action="http://localhost:3001/steam/auth" method="post">
-                        <input type='submit' value='Connect with Steam'/>
-                    </form>
-                </div>
-                <div className = "row">
                     < ServiceButtonBar services = { this.state.services }/>
                 </div>
                 <div className = "row">
-                    < ServiceContainer service={this.state.services[this.state.currentService]} favoriteGames={this.state.favoriteGames[this.state.services[this.state.currentService].name]} userGames={this.state.userGames[this.state.services[this.state.currentService].name]}/>
+                    < ServiceContainer serviceUserId={this.state.services[this.state.currentService].userId} service={this.state.services[this.state.currentService]} favoriteGames={this.state.favoriteGames[this.state.services[this.state.currentService].name]} userGames={this.state.userGames[this.state.services[this.state.currentService].name]}/>
                 </div>
                 <div className = "row">
                     FOOTER

@@ -24,7 +24,7 @@ class LoginModal extends Component {
             password: {
                 value: '',
                 validationString: '',
-                validationFunction: this.jankyPasswordCheckFix
+                validationFunction: null //this.jankyPasswordCheckFix
             },
             passCheck: {
                 value: '',
