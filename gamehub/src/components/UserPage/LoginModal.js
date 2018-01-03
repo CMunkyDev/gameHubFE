@@ -22,7 +22,7 @@ class LoginModal extends Component {
             password: {
                 value: '',
                 validationString: '',
-                validationFunction: null
+                validationFunction: this.jankyPasswordCheckFix
             },
             passCheck: {
                 value: '',
@@ -46,7 +46,8 @@ class LoginModal extends Component {
         this.state = {
             registration: this.registration,
             login: this.login,
-            open: false
+            open: false,
+            currentError : ''
         }
     }
 
@@ -58,8 +59,19 @@ class LoginModal extends Component {
         this.setState({
             registration: this.registration,
             login: this.login,
-            open: false
+            open: false,
+            currentError: ''
         });
+    }
+
+    jankyPasswordCheckFix = firstPasswordInput => {
+        let passVerificationValidationString = this.state.registration.passCheck.value === firstPasswordInput ? '' : `Passwords don't match`
+        this.setState(prev => {
+            return {
+                ...prev,
+                registration: {...prev.registration, passCheck: { ...prev.registration.passCheck, validationString: passVerificationValidationString}}
+            }
+        })
     }
 
     passwordVerificationValidation = secondPasswordInput => {
@@ -83,10 +95,14 @@ class LoginModal extends Component {
     handleSubmit = (postRequestCallback, formKey) => {
         return (event) => {
             let formObject = {}
+            let valid = true
             for (let key in this.state[formKey]) {
+                if (this.state[formKey][key].validationString) valid = false
                 formObject[key] = this.state[formKey][key].value
             }
-            postRequestCallback(formObject)
+            if (valid) {
+                postRequestCallback(formObject)
+            }
         }
     }
 
