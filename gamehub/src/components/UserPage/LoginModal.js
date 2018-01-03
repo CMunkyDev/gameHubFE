@@ -116,6 +116,10 @@ class LoginModal extends Component {
         }
     }
 
+    logoutUser = () => {
+        localStorage.removeItem("gamehubToken")
+    }
+
     clearError = () => {
         this.setState({currentError: ''})
     }
@@ -124,6 +128,7 @@ class LoginModal extends Component {
         return (
             <div>
                 <RaisedButton label="Login/Signup" onClick={this.handleOpen} />
+                <RaisedButton label="Logout" onClick={this.logoutUser} />
                 <Dialog
                     modal={false}
                     open={this.state.open}
