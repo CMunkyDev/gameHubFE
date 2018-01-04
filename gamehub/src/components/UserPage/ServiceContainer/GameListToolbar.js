@@ -4,6 +4,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-
 class GameListToolbar extends Component {
     constructor (props) {
         super(props)
+
     }
 
     render () {
@@ -12,9 +13,11 @@ class GameListToolbar extends Component {
                 <ToolbarGroup>
                     SORT
                 </ToolbarGroup>
+                <ToolbarSeparator />
                 <ToolbarGroup>
                     FILTER
                 </ToolbarGroup>
+                <ToolbarSeparator />
                 <ToolbarGroup>
                     SEARCH
                 </ToolbarGroup>

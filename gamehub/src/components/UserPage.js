@@ -16,7 +16,6 @@ class UserPage extends Component {
             currentUserId: null,
             services: [{
                 name: 'steam',
-                id: '6561197980971766',
                 style: {
                     tab: {
                         backgroundColor: '#181A21',
@@ -27,8 +26,8 @@ class UserPage extends Component {
                         color: '#FFF'
                     }
                 },
-                userId: null,
-                gameList: null,
+                userId: 1,
+                gameList: steamCall.games,
                 favoriteGames: null
             }],
             currentService: 0
