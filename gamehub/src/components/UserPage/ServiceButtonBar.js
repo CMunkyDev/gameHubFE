@@ -6,7 +6,7 @@ import { Tabs, Tab } from 'material-ui/Tabs'
 const ServiceButtonBar = (props) => {
     return (
         <Tabs>
-            {props.services.map(service => <Tab label = {service.name.toUpperCase()} style = {service.style.tab}/>)}
+            {props.services.map((service, index) => <Tab label = {service.name.toUpperCase()} style = {service.style.tab} key = {index} />)}
         </Tabs>
     )
 }

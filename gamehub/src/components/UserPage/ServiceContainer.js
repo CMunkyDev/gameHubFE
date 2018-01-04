@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { List, ListItem } from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
+import { List } from 'material-ui/List'
 import GameRow from './ServiceContainer/GameRow'
 import GameListToolbar from './ServiceContainer/GameListToolbar'
 import muiThemeable from 'material-ui/styles/muiThemeable'
@@ -43,7 +42,7 @@ class ServiceContainer extends Component {
           <GameListToolbar />
           <List style={{ paddingTop: 0 }}>
             {/* { this.props.favoriteGames[this.props.currentService.id].map( gameId => < GameRow gameId={gameId} />  ) } */}
-            {this.state.sortedNFilteredGames.map((game, index) => <GameRow service={this.props.service} game={game} />)}
+            {this.state.sortedNFilteredGames.map((game, index) => <GameRow service={this.props.service} game={game} key={index} />)}
 
           </List>
         </div>

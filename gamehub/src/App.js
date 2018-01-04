@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import UserPage from './components/UserPage'
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
