@@ -35,17 +35,21 @@ class UserPage extends Component {
     }
 
     componentDidMount () {
+        this.addTokenToHeader()
         axios.get(`${process.env.REACT_APP_API_URL}/api/users/current`)
             .then(response => {
-                this.setState({currentUserId: response.data.currentUser.id})
+                this.setState(prev => {return {...prev, currentUserId: response.data.currentUser.id}})
                 this.addTokenToHeader()
-                return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}}`)
+                console.log(response.data.currentUser.id)
+                return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
             })
             .then(idResponse => {
                 this.addTokenToHeader()
+                console.log('data:',idResponse)
                 axios.post(`${process.env.REACT_APP_API_URL}/services/steam/getOwnedGames`, { steamid: idResponse.data.steamId.users_service_id, include_played_free_games: '1'})
                 .then(gameResponse => {
                     this.setState(prev => {
+                        console.log(gameResponse)
                         let newState = { ...prev }
                         newState.services[newState.currentService] = { ...newState.services[newState.currentService], userId: idResponse.data.steamId.users_service_id, gameList: gameResponse.data.response.games }
                         return newState
@@ -89,7 +93,7 @@ class UserPage extends Component {
             let steamID = fullUrl.get('openid.identity').slice(-17)
             console.log('Steam ID: ', steamID)
             this.addTokenToHeader()
-            axios.patch(`${process.env.REACT_APP_API_URL}/api/users/${this.state.currentUserId}`, { users_service_id: steamID })
+            axios.post(`${process.env.REACT_APP_API_URL}/api/users/${this.state.currentUserId}`, { users_service_id: steamID })
         }
     }
 
