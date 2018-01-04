@@ -80,7 +80,6 @@ class LoginModal extends Component {
         return this.state.registration.password.value === secondPasswordInput ? '' : `Passwords don't match`
     }
 
-
     //validation Function takes in the input's value and returns a validation string
     handleChange = (validationFunction) => {
         return (event) => {
@@ -116,10 +115,6 @@ class LoginModal extends Component {
         }
     }
 
-    logoutUser = () => {
-        localStorage.removeItem("gamehubToken")
-    }
-
     clearError = () => {
         this.setState({currentError: ''})
     }
@@ -127,8 +122,7 @@ class LoginModal extends Component {
     render() {
         return (
             <div>
-                <RaisedButton label="Login/Signup" onClick={this.handleOpen} />
-                <RaisedButton label="Logout" onClick={this.logoutUser} />
+                { !this.props.currentUserId ? <RaisedButton label="Login/Signup" onClick={this.handleOpen} /> : <RaisedButton label="Logout" onClick={this.props.logoutFunction} /> }
                 <Dialog
                     modal={false}
                     open={this.state.open}

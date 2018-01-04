@@ -41,7 +41,6 @@ class UserPage extends Component {
             .then(response => {
                 this.setState(prev => {return {...prev, currentUserId: response.data.currentUser.id}})
                 this.addTokenToHeader()
-                console.log(response.data.currentUser.id)
                 return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
             })
             .then(idResponse => {
@@ -79,6 +78,11 @@ class UserPage extends Component {
         return axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, formObject)
     }
 
+    logoutUser = () => {
+        localStorage.removeItem("gamehubToken")
+        this.state.currentUserId = null
+    }
+
     parseUri(){
         if (window.location.search){
             let fullUrl = new URL(window.location).searchParams
@@ -100,12 +104,9 @@ class UserPage extends Component {
 
     render () { 
         this.parseUri()
-        console.log('currentUserId: ', this.state.currentUserId)
-        console.log('steamId: ', this.state.services[this.state.currentService].userId)
-        console.log('gameList: ', this.state.services[this.state.currentService].gameList)
         return (
             <div className = "container-fluid">
-                <LoginModal loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback}/>
+                <LoginModal loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutFunction={this.logoutUser} currentUserId={this.state.currentUserId}/>
                 <div className = "row">
                     HEADER
                 </div>
