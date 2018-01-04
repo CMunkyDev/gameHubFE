@@ -71,6 +71,7 @@ class UserPage extends Component {
             .then(response => {
                 if (response.data.authorization) {
                     localStorage.setItem('gamehubToken', response.data.authorization)
+                    this.componentDidMount()
                 }
             })
     }
@@ -82,7 +83,27 @@ class UserPage extends Component {
 
     logoutUser = () => {
         localStorage.removeItem("gamehubToken")
-        this.state.currentUserId = null
+        this.setState(prev => {return {
+                currentUserId: null,
+                services: [{
+                    name: 'steam',
+                    style: {
+                        tab: {
+                            backgroundColor: '#181A21',
+                            color: '#BBBBBB'
+                        },
+                        row: {
+                            backgroundColor: '#181A21',
+                            color: '#FFF'
+                        }
+                    },
+                    userId: null,
+                    gameList: null,
+                    favoriteGames: null
+                }],
+                currentService: 0
+            }
+        })
     }
 
     async parseUri(){
@@ -120,7 +141,7 @@ class UserPage extends Component {
                     < ServiceButtonBar services = { this.state.services }/>
                 </div>
                 <div className = "row">
-                    < ServiceContainer service={this.state.services[this.state.currentService]}/>
+                    < ServiceContainer currentUserId={this.state.currentUserId} service={this.state.services[this.state.currentService]}/>
                 </div>
                 <div className = "row">
                     FOOTER
