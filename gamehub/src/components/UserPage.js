@@ -26,8 +26,8 @@ class UserPage extends Component {
                         color: '#FFF'
                     }
                 },
-                userId: 1,
-                gameList: steamCall.games,
+                userId: null,
+                gameList: null,
                 favoriteGames: null
             }],
             currentService: 0
