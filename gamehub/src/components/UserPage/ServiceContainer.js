@@ -16,7 +16,6 @@ import muiThemeable from 'material-ui/styles/muiThemeable'
 class ServiceContainer extends Component {
   constructor(props){
     super(props)
-    console.log('service:',this.props.service)
 
     this.state = {
       userGames: [],
@@ -31,7 +30,6 @@ class ServiceContainer extends Component {
   }
 //PRETENDING WE ARE HITTING EACH TIME
   render(){
-    console.log('gamesListinContainer:',this.state.userGames)
     if (this.props.service.gameList && this.props.service.gameList.length !== this.state.userGames.length) {
       this.setState(prev => {
         return {...prev, userGames: this.props.service.gameList, sortedNFilteredGames: this.props.service.gameList}
