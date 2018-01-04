@@ -48,12 +48,17 @@ class ServiceContainer extends Component {
           </List>
         </div>
       )
-    } else {
+    } else if (this.props.currentUserId) {
       return (
         <div className="row">
           <form action="http://localhost:3001/steam/auth" method="post">
             <input type='submit' value='Connect with Steam' />
           </form>
+        </div>
+      )
+    } else {
+      return (
+        <div>
         </div>
       )
     }

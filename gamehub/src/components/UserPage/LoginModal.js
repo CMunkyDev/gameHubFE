@@ -49,7 +49,8 @@ class LoginModal extends Component {
             registration: this.registration,
             login: this.login,
             open: false,
-            currentError : ''
+            currentError : '',
+            errorColor: 'red'
         }
     }
 
@@ -103,8 +104,30 @@ class LoginModal extends Component {
             }
             if (valid) {
                 postRequestCallback(formObject)
+                    .then(prev => {
+                            if (formKey === 'login'){
+                                this.setState(prev => {
+                                    return {
+                                        ...prev,
+                                        open: false
+                                    }
+                                })
+                            } else if (formKey === 'registration') {
+                                this.setState(prev => {
+                                    this.clearSignup()
+                                    console.log('what')
+                                    return {
+                                        ...prev,
+                                        currentError: "Account created!  Please login.",
+                                        errorColor: "green"
+                                    }
+                                })
+                            }
+                        }
+                    )
                     .catch(error => {
                         this.setState(prev => {
+                            console.log(error)
                            return {
                                 ...prev,
                                 currentError: error.response.data.message
@@ -117,6 +140,15 @@ class LoginModal extends Component {
 
     clearError = () => {
         this.setState({currentError: ''})
+    }
+
+    clearSignup = () => {
+        this.setState(prev => {
+            return {
+                ...prev,
+                registration: this.registration
+            }
+        })
     }
 
     render() {
@@ -202,7 +234,7 @@ class LoginModal extends Component {
                         </Tab>
                     </Tabs>
                     <div style={{textAlign: 'center'}}>
-                        <div style={{color: 'red'}}>
+                        <div style={{color: this.state.errorColor}}>
                             {this.state.currentError}
                         </div>
                     </div>
