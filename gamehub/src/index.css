@@ -1,5 +1,40 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, sans-serif;
+}
+
+.backgroundStyle {
+    min-height: 100%;
+    min-width: 2500px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    z-index: -1;
+    background-image: url('images/background-min.png')
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.noGames {
+    color: rgba(255, 255, 255, 1);
+    padding: 20px;
+    text-align: center;
+}
+
+.connectButton {
+    color: rgba(255, 255, 255, 1);
+}
+
+.min-height {
+    min-height: 77vh;
+}
+
+.splashScreen {
+    padding-top: 33vh;
+    padding-bottom: 33vh;
+    width: 100%;
+    text-align: center;
 }

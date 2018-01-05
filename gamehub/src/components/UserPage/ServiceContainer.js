@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { List, ListItem } from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
+import { List } from 'material-ui/List'
 import GameRow from './ServiceContainer/GameRow'
 import GameListToolbar from './ServiceContainer/GameListToolbar'
+import RaisedButton from 'material-ui/RaisedButton'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
-
 // let fakeData = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${XXXXXXXXXXXXXXXXXXXXX}&steamid=${playerId}&include_appinfo=1`
-
 
 // favoriteGames = [favoriteGamesIDArray]
 
@@ -42,6 +40,10 @@ class ServiceContainer extends Component {
       nextState.sortedNFilteredGames = this.sortGames(nextState.sortKey, nextState.sortDirection, this.filterGames(nextState.userGames, nextState.filterKeys))
       if (this.state.searchQuery) nextState.sortedNFilteredGames = nextState.sortedNFilteredGames.filter(game => game.name.toLowerCase().includes(nextState.searchQuery.toLowerCase()))
     }
+  }
+
+  capitalize = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
   }
 
   changeSearchQuery (newQuery) {
@@ -153,26 +155,29 @@ class ServiceContainer extends Component {
     }
     if (this.props.service.userId) {
       return (
-        <div>
+        <div className="min-height">
           <GameListToolbar toolbarFun={this.toolbarFun} sortKey={this.state.sortKey} sortDirection={this.state.sortDirection}/>
           <List style={{ paddingTop: 0 }}>
             {/* { this.props.favoriteGames[this.props.currentService.id].map( gameId => < GameRow gameId={gameId} />  ) } */}
-            {this.state.sortedNFilteredGames.map((game, index) => <GameRow service={this.props.service} game={game} />)}
+            {this.state.sortedNFilteredGames.map((game, index) => <GameRow service={this.props.service} game={game} key={index} />)}
 
           </List>
         </div>
       )
     } else if (this.props.currentUserId) {
       return (
-        <div className="row">
+        <div className="noGames min-height">
+          <p>It looks like you don't have any {this.capitalize(this.props.service.name)} games.  Click the button to connect to your {this.capitalize(this.props.service.name)} account!</p>
           <form action="http://localhost:3001/steam/auth" method="post">
-            <input type='submit' value='Connect with Steam' />
+            <RaisedButton type='submit'>Connect with {this.capitalize(this.props.service.name)}</RaisedButton>
           </form>
         </div>
       )
     } else {
       return (
-        <div>
+        <div className='splashScreen'>
+          <h1>Welcome to gameHUB!</h1>
+          <p>a place to store your game stats</p>
         </div>
       )
     }

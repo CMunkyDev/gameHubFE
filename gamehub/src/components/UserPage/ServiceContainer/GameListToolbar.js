@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import FlatButton from 'material-ui/FlatButton'
@@ -25,7 +25,7 @@ class GameListToolbar extends Component {
     }
 
     colorIf(name, prop = this.props.sortKey, color = '#0af') {
-        return name == prop ? {color} : {}
+        return name === prop ? {color} : {}
     }
 
     showUnplayedToggle(event, newVal) {
