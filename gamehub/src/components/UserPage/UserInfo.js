@@ -1,5 +1,6 @@
 import React from 'react'
-import Avatar from 'material-ui/Avatar';
+import Avatar from 'material-ui/Avatar'
+import Paper from 'material-ui/Paper'
 
 // Example
 // {
@@ -24,10 +25,11 @@ import Avatar from 'material-ui/Avatar';
 
 
 const UserInfo = (props) => {
+    console.log(props)
     if (!props.user || !props.user.username) return ''
-    let {username} = props.user.username
-    if (props.user.steamInfo.summary) {
-        console.log('summary: ',props.user.steamInfo.summary)
+    let username = props.user.username
+    if (props.user.steamInfo.userInfo) {
+        console.log('summary: ',props.user.steamInfo.userInfo)
         var {
             avatar,
             avatarfull,
@@ -46,13 +48,21 @@ const UserInfo = (props) => {
             realname,
             steamid,
             timecreated
-        } = props.user.steamInfo.summary
+        } = props.user.steamInfo.userInfo
     }
     return (
-        <div style={{ background: 'red' }}>
-            <Avatar size={50} src={avatar} />
-            kadsnflkjsdnfkjsdn
-        </div>
+        <Paper style={{background: '#191A21', paddingLeft:'15%', color: '#FFF'}}>
+            <div style={{ float: 'left', background: '#191A21'}}>
+                <img style={{width: '150px', borderRadius: '25%'}} src={avatarfull} />
+            </div>
+            <div style={{ background: '#191A21', display: 'flex', paddingLeft: '20px', paddingTop: '15px'}}>
+                <h2>{username}</h2>
+                <a href={profileurl}><h4>Steam: {personaname}</h4></a>
+                <h5>Name: {realname}</h5>
+                <h5>State: {locstatecode}</h5>
+            </div>
+
+        </Paper>
     )
 }
 

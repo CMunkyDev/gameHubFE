@@ -13,11 +13,13 @@ class UserPage extends Component {
     }
 
     render () {
+        console.log('BS: ',this.props.bigState)
+        console.log('CPU: ',this.props.bigState.currentPageUser)
         return (
             <div className = "container-fluid">
                 <div className = "row">
                     <Header userSearch={this.props.userSearch} loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUser={this.props.bigState.currentUser}/>
-                    {/*<UserInfo user={this.props.bigState.currentPageUser}/>*/}
+                    <UserInfo user={this.props.bigState.currentPageUser} />
                 </div>
                 <div className = "row">
                     < ServiceButtonBar user={this.props.bigState.currentPageUser || {}} services = { this.props.bigState.services }/>
