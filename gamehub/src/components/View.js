@@ -61,17 +61,12 @@ class View extends Component {
     //else render login suggestion & user Search
 
     getAllCurrentUserInfo = async () => {
-        console.log('hello')
         if (localStorage.getItem('gamehubToken')) {
-            console.log('what')
             if (!this.state.currentUser.id) {
-                console.log('no user id?')
                 await this.getCurrentUser()
              } else {
-                console.log('test',this.state.currentUser)
                  if (!this.state.currentUser.steamInfo) { 
                      let steamInfo = await this.grabSteamInfo(this.state.currentUser.steamId)
-                     console.log('steam?', steamInfo)
                      this.setState(prev => {
                          return {...prev, currentUser: {...prev.currentUser, steamInfo}}
                      })
@@ -119,7 +114,6 @@ class View extends Component {
         this.addTokenToHeader()
         return axios.get(`${process.env.REACT_APP_API_URL}/api/users/search/${usernameOrEmail}`)
             .then(response => {
-                console.log('searchResponse: ', response)
                 return response.data.user
             })
     }
@@ -267,7 +261,6 @@ class View extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <UserPage bigState={this.state} userSearch={this.userSearch} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutUser={this.logoutUser} />

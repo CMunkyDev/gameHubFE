@@ -4,7 +4,6 @@ import { Tabs, Tab } from 'material-ui/Tabs'
 
 //[{name: Steam, }]
 const ServiceButtonBar = (props) => {
-    console.log(props)
     if (props.user.id){
         return (
             <Tabs>
