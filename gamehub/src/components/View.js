@@ -61,12 +61,17 @@ class View extends Component {
     //else render login suggestion & user Search
 
     getAllCurrentUserInfo = async () => {
+        console.log('hello')
         if (localStorage.getItem('gamehubToken')) {
+            console.log('what')
             if (!this.state.currentUser.id) {
+                console.log('no user id?')
                 await this.getCurrentUser()
              } else {
+                console.log('test',this.state.currentUser)
                  if (!this.state.currentUser.steamInfo) { 
                      let steamInfo = await this.grabSteamInfo(this.state.currentUser.steamId)
+                     console.log('steam?', steamInfo)
                      this.setState(prev => {
                          return {...prev, currentUser: {...prev.currentUser, steamInfo}}
                      })
@@ -79,7 +84,6 @@ class View extends Component {
     grabSteamInfo = (steamId) => {
         return axios.post(`${process.env.REACT_APP_API_URL}/services/steam/player_info`, { steamid: steamId, include_played_free_games: '1' })
             .then(userInfoResponse => {
-                console.log('UIR: ', userInfoResponse)
                 if (userInfoResponse) {
                     let { summary, ownedGames, friendList, recentlyPlayed, playerBans } = this.parseUserInfoResponse(userInfoResponse.data)
                     return { gameList: ownedGames, gameCount: ownedGames.length, recentGames: recentlyPlayed, friendList, friendCount: friendList.length, userInfo: summary, banStatus: playerBans }
@@ -90,14 +94,10 @@ class View extends Component {
     }
 
     getCurrentPageUser = () => {
-        console.log('aaaaa')
         if (this.state.currentPageUsername) {
             this.getUserByUsernameOrEmail(this.state.currentPageUsername).then(user => {
-                console.log('USER: ', user)
                 this.grabSteamInfo(user.steamId).then(pageUserSteamInfo => {
-                    console.log('USER STEAM INFO: ', pageUserSteamInfo)
                     this.setState(prev => {
-                        console.log('PREV STATE AF: ', prev)
                         return { ...prev, currentPageUser: { ...user, steamInfo: pageUserSteamInfo }}
                     })
                 })
@@ -221,7 +221,9 @@ class View extends Component {
         localStorage.removeItem("gamehubToken")
         this.setState(prev => {return {
                 currentUser: {},
-                currentPageUserId: null,
+                userQuery: '',
+                currentPageUser: {},
+                fullPageError: '',
                 services: [{
                     name: 'steam',
                     style: {
@@ -241,6 +243,14 @@ class View extends Component {
                 currentService: 0
             }
         })
+    }
+
+    componentWillUpdate = (nextProps, nextState) => {
+        if (!nextState.currentUser.id) {
+            if (this.state.currentUser.username === nextState.currentPageUsername) {
+                nextState.currentPageUsername = null
+            }
+        }
     }
 
     userSearch = (event) => {

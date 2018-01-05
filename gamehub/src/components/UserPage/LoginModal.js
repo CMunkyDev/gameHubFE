@@ -145,6 +145,7 @@ class LoginModal extends Component {
     }
 
     render() {
+        console.log('->', this.props)
         return (
             <div className='loginButton'>
                 { !this.props.currentUser.id ? <RaisedButton label="Login/Signup" onClick={this.handleOpen} /> : <RaisedButton label="Logout" onClick={this.props.logoutUser} /> }
