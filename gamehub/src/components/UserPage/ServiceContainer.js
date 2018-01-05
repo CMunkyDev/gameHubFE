@@ -178,11 +178,14 @@ class ServiceContainer extends Component {
         )
       }
     } else {
-      return (<div></div>)
+      return (
+        <div className='splashScreen'>
+            <h1>Welcome to gameHUB!</h1>
+            <p>a place to store your game stats</p>
+        </div>
+        )
     }
   }
-    
-
 }
 
 export default muiThemeable()(ServiceContainer)

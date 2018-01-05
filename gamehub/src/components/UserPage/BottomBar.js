@@ -9,11 +9,17 @@ const homeIcon = <Home />;
 const mailIcon = <Mail />;
 const thumbIcon = <ThumbUp />;
 
+const bottomStyle = {
+    position: 'fixed',
+    bottom: 0,
+    width: "calc(100% - 40px)"
+}
+
 class BottomNavigationExampleSimple extends Component {
 
   render() {
     return (
-      <Paper zDepth={1}>
+      <Paper zDepth={1} style={bottomStyle}>
         <BottomNavigation>
           <BottomNavigationItem
             label="Home"
