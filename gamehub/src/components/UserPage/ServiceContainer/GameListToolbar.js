@@ -24,13 +24,8 @@ class GameListToolbar extends Component {
         }
     }
 
-<<<<<<< HEAD
-    colorIf(name, prop = this.props.sortKey, color = '#0af') {
-        return name === prop ? {color} : {}
-=======
     colorIf(name, prop = this.props.sortKey, color = '#0E0B16') {
         return name == prop ? {color} : {}
->>>>>>> 07a2aac1fde9bbd5aa4d4f55a9cdff7b085ccc58
     }
 
     showUnplayedToggle(event, newVal) {
