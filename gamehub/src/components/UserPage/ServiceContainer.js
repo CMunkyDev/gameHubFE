@@ -139,49 +139,49 @@ class ServiceContainer extends Component {
     let directed = direction.toLowerCase() === 'asc' ? final : final.reverse()
     return directed
   }
-
-  componentDidMount () {
-    this.setState(prev => {
-      return { ...prev, userGames: this.props.service.gameList ? [...this.props.service.gameList] : [], sortedNFilteredGames: this.props.service.gameList ? [...this.props.service.gameList] : []}
-    })
-  }
+  
 //PRETENDING WE ARE HITTING EACH TIME
   render(){
-    if (this.props.service.gameList && this.props.service.gameList.length !== this.state.userGames.length) {
-      this.setState(prev => {
-        return { ...prev, userGames: this.props.service.gameList ? [...this.props.service.gameList] : [], sortedNFilteredGames: this.props.service.gameList ? [...this.props.service.gameList] : [] }
-      })
-    } else {
-    }
-    if (this.props.service.userId) {
-      return (
-        <div className="min-height">
-          <GameListToolbar toolbarFun={this.toolbarFun} sortKey={this.state.sortKey} sortDirection={this.state.sortDirection}/>
-          <List style={{ paddingTop: 0 }}>
-            {/* { this.props.favoriteGames[this.props.currentService.id].map( gameId => < GameRow gameId={gameId} />  ) } */}
-            {this.state.sortedNFilteredGames.map((game, index) => <GameRow service={this.props.service} game={game} key={index} />)}
+    if (this.props.user && this.props.user.steamInfo) {
+      if (this.props.user.steamInfo.gameList && this.props.user.steamInfo.gameList.length !== this.state.userGames.length) {
+        this.setState(prev => {
+          return { ...prev, userGames: this.props.user.steamInfo.gameList ? [...this.props.user.steamInfo.gameList] : [], sortedNFilteredGames: this.props.user.steamInfo.gameList ? [...this.props.user.steamInfo.gameList] : [] }
+        })
+      } else {
+      }
+      if (this.props.user.steamId) {
+        return (
+          <div className="min-height">
+            <GameListToolbar toolbarFun={this.toolbarFun} sortKey={this.state.sortKey} sortDirection={this.state.sortDirection} />
+            <List style={{ paddingTop: 0 }}>
+              {/* { this.props.favoriteGames[this.props.currentService.id].map( gameId => < GameRow gameId={gameId} />  ) } */}
+              {this.state.sortedNFilteredGames.map((game, index) => <GameRow service={this.props.service} game={game} key={index} />)}
 
-          </List>
-        </div>
-      )
-    } else if (this.props.currentUserId) {
-      return (
-        <div className="noGames min-height">
-          <p>It looks like you don't have any {this.capitalize(this.props.service.name)} games.  Click the button to connect to your {this.capitalize(this.props.service.name)} account!</p>
-          <form action="http://localhost:3001/steam/auth" method="post">
-            <RaisedButton type='submit'>Connect with {this.capitalize(this.props.service.name)}</RaisedButton>
-          </form>
-        </div>
-      )
+            </List>
+          </div>
+        )
+      } else if (this.props.userId) {
+        return (
+          <div className="noGames min-height">
+            <p>It looks like you don't have any {this.capitalize(this.props.service.name)} games.  Click the button to connect to your {this.capitalize(this.props.service.name)} account!</p>
+            <form action="http://localhost:3001/steam/auth" method="post">
+              <RaisedButton type='submit'>Connect with {this.capitalize(this.props.service.name)}</RaisedButton>
+            </form>
+          </div>
+        )
+      } else {
+        return (
+          <div className='splashScreen'>
+            <h1>Welcome to gameHUB!</h1>
+            <p>a place to store your game stats</p>
+          </div>
+        )
+      }
     } else {
-      return (
-        <div className='splashScreen'>
-          <h1>Welcome to gameHUB!</h1>
-          <p>a place to store your game stats</p>
-        </div>
-      )
+      return (<div></div>)
     }
   }
+    
 
 }
 

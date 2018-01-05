@@ -1,22 +1,27 @@
 import React, { Component } from 'react'
 import UserPage from './UserPage'
 import axios from 'axios'
+import cloneDeep from 'lodash/cloneDeep'
 
 class View extends Component {
     constructor(props){
         super(props)
+        this.retrievedInfo = false
         this.state = {
-            currentUserId: null,
-            currentPageUser: null,
+            currentUser: {},
+            userQuery: '',
+            currentPageUsername: null,
+            currentPageUser: {},
+            fullPageError: '',
             services: [{
                 name: 'steam',
                 style: {
                     tab: {
-                        backgroundColor: '#181A21',
-                        color: '#BBBBBB'
+                        backgroundColor: '#9099A2',
+                        color: '#FFF'
                     },
                     row: {
-                        backgroundColor: '#181A21',
+                        backgroundColor: '#9099A2',
                         color: '#FFF'
                     }
                 },
@@ -28,7 +33,7 @@ class View extends Component {
         }
     }
 
-    parseUserInfoResponse (body) {
+    parseUserInfoResponse = (body) => {
         let summary = body[0].response.players[0]
         let ownedGames = body[1].response.games
         let friendList = body[2].friendslist.friends
@@ -38,39 +43,153 @@ class View extends Component {
         return {summary, ownedGames, friendList, recentlyPlayed, playerBans}
     }
 
-    componentDidMount () {
+    changeUserQuery = () => {
+
+    }
+
+    //if localStorage.getItem('gamehubToken')
+        //if !state.currentUser.id
+            //getCurrentUser
+        //else 
+            //if !state.currentUser.steamInfo
+                //if state.currentUser.steamId
+                    //getUserSteamInfo
+
+                //else render steamLink button/suggestion
+    //else render login suggestion & user Search
+
+    getAllCurrentUserInfo = async () => {
         if (localStorage.getItem('gamehubToken')) {
-           this.addTokenToHeader()
-            axios.get(`${process.env.REACT_APP_API_URL}/api/users/current`)
-                .then(response => {
-                    this.setState(prev => {return {...prev, currentUserId: response.data.currentUser.id}})
-                    this.addTokenToHeader()
-                    let fullUrl = new URL(window.location)
-                    let searchParams = fullUrl.searchParams
-                    window.history.replaceState({}, document.title, "/")
-                    if (searchParams.get("openid.identity")){
-                        return this.storeSteamId(searchParams).then(result => axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`))
-                    } else {
-                        return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
-                    }
-                }) 
-                .then(idResponse => {
-                    if (idResponse.data.steamId) {
-                        this.addTokenToHeader()
-                        axios.post(`${process.env.REACT_APP_API_URL}/services/steam/getOwnedGames`, { steamid: idResponse.data.steamId.users_service_id, include_played_free_games: '1'})
-                        .then(gameResponse => {
-                            this.setState(prev => {
-                                let newState = { ...prev }
-                                newState.services[newState.currentService] = { ...newState.services[newState.currentService], userId: idResponse.data.steamId.users_service_id, gameList: gameResponse.data.response.games }
-                                return newState
-                            })
-                        })
-                    }
-                }) 
+            if (!this.state.currentUser.id) {
+                await this.getCurrentUser()
+             } else {
+                 if (!this.state.currentUser.steamInfo) { 
+                     let steamInfo = await this.grabSteamInfo(this.state.currentUser.steamId)
+                     this.setState(prev => {
+                         return {...prev, currentUser: {...prev.currentUser, steamInfo}}
+                     })
+                 }
+             }
         }
     }
 
-    addTokenToHeader = function () {
+
+    grabSteamInfo = (steamId) => {
+        return axios.post(`${process.env.REACT_APP_API_URL}/services/steam/player_info`, { steamid: steamId, include_played_free_games: '1' })
+            .then(userInfoResponse => {
+                let { summary, ownedGames, friendList, recentlyPlayed, playerBans } = this.parseUserInfoResponse(userInfoResponse.data)
+                return {gameList: ownedGames, gameCount: ownedGames.length, recentGames: recentlyPlayed, friendList, friendCount: friendList.length, userInfo: summary, banStatus: playerBans }
+            })
+    }
+
+    getCurrentPageUser = () => {
+        console.log('aaaaa')
+        if (this.state.currentPageUsername) {
+            this.getUserByUsernameOrEmail(this.state.currentPageUsername).then(user => {
+                console.log('USER: ', user)
+                this.grabSteamInfo(user.steamId).then(pageUserSteamInfo => {
+                    console.log('USER STEAM INFO: ', pageUserSteamInfo)
+                    this.setState(prev => {
+                        console.log('PREV STATE AF: ', prev)
+                        return { ...prev, currentPageUser: { ...user, steamInfo: pageUserSteamInfo }}
+                    })
+                })
+            })
+        }
+    }
+
+    getCurrentUser = () => {
+        this.addTokenToHeader()
+        return axios.get(`${process.env.REACT_APP_API_URL}/api/users/current`)
+            .then(response => {
+                this.setState(prev => {
+                    return { ...prev, currentUser : response.data.currentUser }
+                }) 
+            })
+    }
+
+    getUserByUsernameOrEmail = (usernameOrEmail) => {
+        this.addTokenToHeader()
+        return axios.get(`${process.env.REACT_APP_API_URL}/api/users/search/${usernameOrEmail}`)
+            .then(response => {
+                console.log('searchResponse: ', response)
+                return response.data.user
+            })
+    }
+
+    fillCurrentUserState = async () => {
+        await this.getAllCurrentUserInfo()
+        await this.getAllCurrentUserInfo()
+    }
+                        // if (currentUser.steamId) {
+                            
+    //                     } else {
+
+    //                     }
+    //                     this.setState(prev => { return { ...prev, currentUser: { ...prev.currentUser, ...response.data.currentUser } } })
+    //                     this.addTokenToHeader()
+    //                     let fullUrl = new URL(window.location)
+    //                     let searchParams = fullUrl.searchParams
+    //                     window.history.replaceState({}, document.title, "/")
+    //                     if (searchParams.get("openid.identity")) {
+    //                         return this.storeSteamId(searchParams).then(result => axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`))
+    //                     } else {
+    //                         return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
+    //                     }
+    //                 })
+    //                 .then(idResponse => {
+    //                     if (idResponse.data.steamId) {
+    //                         this.addTokenToHeader()
+                            
+    //                     }
+    //                 }) 
+    //         }
+    //     }
+    // }
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevState.currentPageUsername !== this.state.currentPageUsername) {
+           this.getCurrentPageUser()
+        }
+    }
+
+    componentDidMount = async () => {
+        await this.fillCurrentUserState()
+        this.setState(prev => {
+            return {...prev, currentPageUsername: prev.currentUser.username}
+        })
+        
+        
+
+        // if (localStorage.getItem('gamehubToken')) {
+        //    this.addTokenToHeader()
+        //     axios.get(`${process.env.REACT_APP_API_URL}/api/users/current`)
+        //         .then(response => {
+        //             this.setState(prev => {return {...prev, currentUser: {...prev.currentUser, ...response.data.currentUser}}})
+        //             this.addTokenToHeader()
+        //             let fullUrl = new URL(window.location)
+        //             let searchParams = fullUrl.searchParams
+        //             window.history.replaceState({}, document.title, "/")
+        //             if (searchParams.get("openid.identity")){
+        //                 return this.storeSteamId(searchParams).then(result => axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`))
+        //             } else {
+        //                 return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
+        //             }
+        //         }) 
+        //         .then(idResponse => {
+        //             if (idResponse.data.steamId) {
+        //                 this.addTokenToHeader()
+        //                     this.setState(prev => {
+        //                         let newState = { ...prev }
+        //                         newState.currentUser.steamId = idResponse.data.steamId.users_service_id,
+
+        //                         return newState
+        //                     })
+        //                 })
+        //             }
+        //         }) 
+        // }
+    }
+    addTokenToHeader () {
         let token = localStorage.getItem('gamehubToken')
         axios.defaults.headers.common['auth'] = token
     }
@@ -94,7 +213,8 @@ class View extends Component {
     logoutUser = () => {
         localStorage.removeItem("gamehubToken")
         this.setState(prev => {return {
-                currentUserId: null,
+                currentUser: {},
+                currentPageUserId: null,
                 services: [{
                     name: 'steam',
                     style: {
@@ -118,9 +238,11 @@ class View extends Component {
 
     storeSteamId(params){
         let steamID = params.get('openid.identity').slice(-17)
-        return axios.post(`${process.env.REACT_APP_API_URL}/api/users/${this.state.currentUserId}`, { users_service_id: steamID })
+        return axios.post(`${process.env.REACT_APP_API_URL}/api/users/${this.state.currentUser.id}`, { users_service_id: steamID })
     }
+
     render() {
+        console.log(this.state)
         return (
             <div>
                 <UserPage bigState={this.state} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutUser={this.logoutUser} />
