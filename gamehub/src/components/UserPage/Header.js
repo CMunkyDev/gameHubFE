@@ -8,6 +8,9 @@ const hiddenButton = {
 }
 
 class Header extends Component {
+    constructor (props) {
+        super(props)
+    }
 
     render(){
         return (
@@ -28,7 +31,7 @@ class Header extends Component {
                     </form>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <LoginModal loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUserId={this.props.currentUserId}/>
+                    <LoginModal loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUser={this.props.currentUser}/>
                 </ToolbarGroup>
             </Toolbar>
             )

@@ -79,6 +79,7 @@ class View extends Component {
     grabSteamInfo = (steamId) => {
         return axios.post(`${process.env.REACT_APP_API_URL}/services/steam/player_info`, { steamid: steamId, include_played_free_games: '1' })
             .then(userInfoResponse => {
+                console.log('UIR: ', userInfoResponse)
                 if (userInfoResponse) {
                     let { summary, ownedGames, friendList, recentlyPlayed, playerBans } = this.parseUserInfoResponse(userInfoResponse.data)
                     return { gameList: ownedGames, gameCount: ownedGames.length, recentGames: recentlyPlayed, friendList, friendCount: friendList.length, userInfo: summary, banStatus: playerBans }
@@ -245,7 +246,9 @@ class View extends Component {
     userSearch = (event) => {
         event.preventDefault()
         const searchValue = document.getElementById('userSearch')[0].value
-        console.log(searchValue)
+        this.setState(prev => {
+            return {...prev, currentPageUsername: searchValue}
+        })
     }
 
     storeSteamId(params){

@@ -24,9 +24,10 @@ import Avatar from 'material-ui/Avatar';
 
 
 const UserInfo = (props) => {
-    if (!props || !props.user) return ''
+    if (!props.user || !props.user.username) return ''
     let {username} = props.user.username
-    if (props.userServiceInfo) {
+    if (props.user.steamInfo.summary) {
+        console.log('summary: ',props.user.steamInfo.summary)
         var {
             avatar,
             avatarfull,
@@ -45,12 +46,13 @@ const UserInfo = (props) => {
             realname,
             steamid,
             timecreated
-        } = props.userServiceInfo
+        } = props.user.steamInfo.summary
     }
-    
-
     return (
-        <Avatar size={50} src={avatar} />
+        <div style={{ background: 'red' }}>
+            <Avatar size={50} src={avatar} />
+            kadsnflkjsdnfkjsdn
+        </div>
     )
 }
 
