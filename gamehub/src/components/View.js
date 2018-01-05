@@ -35,9 +35,11 @@ class View extends Component {
                 .then(response => {
                     this.setState(prev => {return {...prev, currentUserId: response.data.currentUser.id}})
                     this.addTokenToHeader()
-                    const urlParams = new URL (window.location).searchParams
-                    if (urlParams.get("openid.identity")){
-                        return this.parseUri()
+                    let fullUrl = new URL(window.location)
+                    let searchParams = fullUrl.searchParams
+                    window.history.replaceState({}, document.title, "/")
+                    if (searchParams.get("openid.identity")){
+                        return this.storeSteamId(searchParams).then(result => axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`))
                     } else {
                         return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
                     }
@@ -104,10 +106,8 @@ class View extends Component {
         })
     }
 
-    parseUri(){
-        let fullUrl = new URL(window.location).searchParams
-        let steamID = fullUrl.get('openid.identity').slice(-17)
-        window.location = window.location.hash = ''
+    storeSteamId(params){
+        let steamID = params.get('openid.identity').slice(-17)
         return axios.post(`${process.env.REACT_APP_API_URL}/api/users/${this.state.currentUserId}`, { users_service_id: steamID })
     }
     render() {
