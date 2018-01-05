@@ -141,7 +141,7 @@ class LoginModal extends Component {
 
     render() {
         return (
-            <div>
+            <div className='loginButton'>
                 { !this.props.currentUserId ? <RaisedButton label="Login/Signup" onClick={this.handleOpen} /> : <RaisedButton label="Logout" onClick={this.props.logoutFunction} /> }
                 <Dialog
                     modal={false}

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import ServiceContainer from './UserPage/ServiceContainer'
-import axios from 'axios'
 import ServiceButtonBar from './UserPage/ServiceButtonBar'
 import LoginModal from './UserPage/LoginModal'
+import BottomBar from './UserPage/BottomBar'
 
 //let steamCall = require('../fakeNews').response
 
@@ -10,113 +10,16 @@ class UserPage extends Component {
     constructor(props){
         super(props)
         this.state = {
-            currentUserId: null,
-            services: [{
-                name: 'steam',
-                style: {
-                    tab: {
-                        backgroundColor: '#181A21',
-                        color: '#BBBBBB'
-                    },
-                    row: {
-                        backgroundColor: '#181A21',
-                        color: '#FFF'
-                    }
-                },
-                userId: null,
-                gameList: null,
-                favoriteGames: null
-            }],
-            currentService: 0
+            currentUserId: this.props.bigState.currentUserId,
+            services: this.props.bigState.services,
+            currentService: this.props.bigState.currentService
         }
-    }
-
-    componentDidMount () {
-        if (localStorage.getItem('gamehubToken')) {
-           this.addTokenToHeader()
-            axios.get(`${process.env.REACT_APP_API_URL}/api/users/current`)
-                .then(response => {
-                    this.setState(prev => {return {...prev, currentUserId: response.data.currentUser.id}})
-                    this.addTokenToHeader()
-                    return this.parseUri() || axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
-                }) 
-                .then(idResponse => {
-                    if (idResponse.data) {
-                        this.addTokenToHeader()
-                        axios.post(`${process.env.REACT_APP_API_URL}/services/steam/getOwnedGames`, { steamid: idResponse.data.steamId.users_service_id, include_played_free_games: '1'})
-                        .then(gameResponse => {
-                            this.setState(prev => {
-                                let newState = { ...prev }
-                                newState.services[newState.currentService] = { ...newState.services[newState.currentService], userId: idResponse.data.steamId.users_service_id, gameList: gameResponse.data.response.games }
-                                return newState
-                            })
-                        })
-                    }
-                }) 
-        }
-    }
-
-    addTokenToHeader = function () {
-        let token = localStorage.getItem('gamehubToken')
-        axios.defaults.headers.common['auth'] = token
-    }
-
-    loginFormCallback = (formObject) => {
-        this.addTokenToHeader()
-        return axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, formObject)
-            .then(response => {
-                if (response.data.authorization) {
-                    localStorage.setItem('gamehubToken', response.data.authorization)
-                    this.componentDidMount()
-                }
-            })
-    }
-
-    registrationFormCallback = (formObject) => {
-        this.addTokenToHeader()
-        return axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, formObject)
-    }
-
-    logoutUser = () => {
-        localStorage.removeItem("gamehubToken")
-        this.setState(prev => {return {
-                currentUserId: null,
-                services: [{
-                    name: 'steam',
-                    style: {
-                        tab: {
-                            backgroundColor: '#181A21',
-                            color: '#BBBBBB'
-                        },
-                        row: {
-                            backgroundColor: '#181A21',
-                            color: '#FFF'
-                        }
-                    },
-                    userId: null,
-                    gameList: null,
-                    favoriteGames: null
-                }],
-                currentService: 0
-            }
-        })
-    }
-
-    async parseUri(){
-        if (window.location.search){
-            let fullUrl = new URL(window.location).searchParams
-            let steamID = fullUrl.get('openid.identity').slice(-17)
-            this.addTokenToHeader()
-            axios.post(`${process.env.REACT_APP_API_URL}/api/users/${this.state.currentUserId}`, { users_service_id: steamID })
-            return {data: {steamId: { users_service_id: steamID}}}
-        }
-        return 0
     }
 
     render () {
         return (
             <div className = "container-fluid">
-                <LoginModal loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutFunction={this.logoutUser} currentUserId={this.state.currentUserId}/>
+                <LoginModal loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutFunction={this.props.logoutUser} currentUserId={this.state.currentUserId}/>
                 <div className = "row">
                     HEADER
                 </div>
@@ -130,7 +33,7 @@ class UserPage extends Component {
                     < ServiceContainer currentUserId={this.state.currentUserId} service={this.state.services[this.state.currentService]}/>
                 </div>
                 <div className = "row">
-                    FOOTER
+                    <BottomBar />
                 </div>
             </div>
         )
