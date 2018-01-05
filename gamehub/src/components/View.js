@@ -43,8 +43,10 @@ class View extends Component {
         return {summary, ownedGames, friendList, recentlyPlayed, playerBans}
     }
 
-    changeUserQuery = () => {
-
+    changeUserQuery = (event, value) => {
+        this.setState(prev => {
+            return {...prev, currentPageUsername: value}
+        })
     }
 
     //if localStorage.getItem('gamehubToken')
@@ -77,8 +79,12 @@ class View extends Component {
     grabSteamInfo = (steamId) => {
         return axios.post(`${process.env.REACT_APP_API_URL}/services/steam/player_info`, { steamid: steamId, include_played_free_games: '1' })
             .then(userInfoResponse => {
-                let { summary, ownedGames, friendList, recentlyPlayed, playerBans } = this.parseUserInfoResponse(userInfoResponse.data)
-                return {gameList: ownedGames, gameCount: ownedGames.length, recentGames: recentlyPlayed, friendList, friendCount: friendList.length, userInfo: summary, banStatus: playerBans }
+                if (userInfoResponse) {
+                    let { summary, ownedGames, friendList, recentlyPlayed, playerBans } = this.parseUserInfoResponse(userInfoResponse.data)
+                    return { gameList: ownedGames, gameCount: ownedGames.length, recentGames: recentlyPlayed, friendList, friendCount: friendList.length, userInfo: summary, banStatus: playerBans }
+                } else {
+                    return null
+                }
             })
     }
 
@@ -245,7 +251,7 @@ class View extends Component {
         console.log(this.state)
         return (
             <div>
-                <UserPage bigState={this.state} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutUser={this.logoutUser} />
+                <UserPage changeUserQuery={this.changeUserQuery} bigState={this.state} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutUser={this.logoutUser} />
             </div>
         )
     }

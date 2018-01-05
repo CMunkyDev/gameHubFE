@@ -18,7 +18,7 @@ class Header extends Component {
                 <ToolbarGroup>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <TextField hintText="User Search..."/>
+                    <TextField hintText="User Search..." />
                 </ToolbarGroup>
                 <ToolbarGroup>
                     <LoginModal loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUserId={this.props.currentUserId}/>
