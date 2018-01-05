@@ -111,7 +111,7 @@ class View extends Component {
     render() {
         return (
             <div>
-                <UserPage bigState={this.state} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutFunction={this.logoutUser} />
+                <UserPage bigState={this.state} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutUser={this.logoutUser} />
             </div>
         )
     }

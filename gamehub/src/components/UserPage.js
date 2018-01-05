@@ -19,7 +19,7 @@ class UserPage extends Component {
     render () {
         return (
             <div className = "container-fluid">
-                <LoginModal loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutFunction={this.props.logoutUser} currentUserId={this.state.currentUserId}/>
+                <LoginModal loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutFunction={this.props.logoutUser} currentUserId={this.props.bigState.currentUserId}/>
                 <div className = "row">
                     HEADER
                 </div>
