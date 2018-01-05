@@ -8,6 +8,9 @@ const hiddenButton = {
 }
 
 class Header extends Component {
+    constructor (props) {
+        super(props)
+    }
 
     render(){
         return (

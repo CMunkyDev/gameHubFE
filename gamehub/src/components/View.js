@@ -250,6 +250,9 @@ class View extends Component {
     userSearch = (event) => {
         event.preventDefault()
         const searchValue = document.getElementById('userSearch')[0].value
+        this.setState(prev => {
+            return {...prev, currentPageUsername: searchValue}
+        })
     }
 
     storeSteamId(params){
