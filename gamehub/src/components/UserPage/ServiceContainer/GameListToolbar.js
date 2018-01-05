@@ -24,7 +24,7 @@ class GameListToolbar extends Component {
         }
     }
 
-    colorIf(name, prop = this.props.sortKey, color = '#0af') {
+    colorIf(name, prop = this.props.sortKey, color = '#0E0B16') {
         return name == prop ? {color} : {}
     }
 
@@ -44,15 +44,15 @@ class GameListToolbar extends Component {
         return (
             <Toolbar >
                 <ToolbarGroup style={{ display: 'flex', width: '28%'}}>
-                    <FlatButton style={this.colorIf('name')} label="Game Name" onClick={this.handleSortClick('name')}/>
-                    <FlatButton style={this.colorIf('time')} label="Time Played" onClick={this.handleSortClick('time')}/>
+                    <FlatButton style={this.colorIf('name')} label="Name" onClick={this.handleSortClick('name')}/>
+                    <FlatButton style={this.colorIf('time')} label="Played" onClick={this.handleSortClick('time')}/>
                     <FlatButton label={this.props.sortDirection} onClick={this.toggleSortDirection} />
                 </ToolbarGroup>
                 <ToolbarGroup style={{ display: 'flex', width: '18%'}}>
                     <Toggle label='Show Unplayed Games' onToggle={this.showUnplayedToggle}/>
                 </ToolbarGroup>
                 <ToolbarGroup style={{ display: 'flex', width: '28%' }}>
-                    <TextField hintStyle={{color:'pink'}} hintText='Search...' onChange={this.handleSearchChange}/>
+                    <TextField hintText='Game Search...' onChange={this.handleSearchChange}/>
                 </ToolbarGroup>
             </Toolbar>
         )
