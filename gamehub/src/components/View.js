@@ -13,7 +13,11 @@ class View extends Component {
                 style: {
                     tab: {
                         backgroundColor: '#181A21',
+<<<<<<< HEAD
                         color: '#BBBBBB'
+=======
+                        color: '#BBB'
+>>>>>>> 07a2aac1fde9bbd5aa4d4f55a9cdff7b085ccc58
                     },
                     row: {
                         backgroundColor: '#181A21',
@@ -100,7 +104,7 @@ class View extends Component {
                     style: {
                         tab: {
                             backgroundColor: '#181A21',
-                            color: '#BBBBBB'
+                            color: '#BBB'
                         },
                         row: {
                             backgroundColor: '#181A21',
