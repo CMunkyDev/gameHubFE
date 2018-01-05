@@ -51,15 +51,17 @@ const UserInfo = (props) => {
         } = props.user.steamInfo.userInfo
     }
     return (
-        <Paper style={{background: '#191A21', paddingLeft:'15%', color: '#FFF'}}>
-            <div style={{ float: 'left', background: '#191A21'}}>
-                <img style={{width: '150px', borderRadius: '25%'}} src={avatarfull} />
+        <Paper style={{background: '#191A21', paddingLeft:'15%', color: '#FFF', minHeight: "150px", paddingTop: '10px', paddingBottom: '10px'}}>
+            <div style={{ float: 'left', background: '#191A21', height: '130px'}}>
+                <img style={{width: '130px', borderRadius: '25%'}} src={avatarfull} />
             </div>
-            <div style={{ background: '#191A21', display: 'flex', paddingLeft: '20px', paddingTop: '15px'}}>
-                <h2>{username}</h2>
-                <a href={profileurl}><h4>Steam: {personaname}</h4></a>
-                <h5>Name: {realname}</h5>
-                <h5>State: {locstatecode}</h5>
+            <div style={{ background: '#191A21', display: 'flex', paddingLeft: '20px'}}>
+                <div style={{display: 'block'}}>
+                    <h1 style={{margin: "9px 0"}}>{username}</h1>
+                    <a href={profileurl} style={{color: '#FFF'}}><h4 style={{margin: "9px 0"}}>Steam: {personaname}</h4></a>
+                    <h5 style={{margin: "9px 0"}}>Name: {realname}</h5>
+                    <h5 style={{margin: "9px 0"}}>State: {locstatecode}</h5>
+                </div>
             </div>
 
         </Paper>
