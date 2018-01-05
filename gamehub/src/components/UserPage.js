@@ -5,6 +5,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable'
 import ServiceButtonBar from './UserPage/ServiceButtonBar'
 import SteamAPI from '../service-calls/steam'
 import LoginModal from './UserPage/LoginModal'
+import UserInfo from './UserPage/UserInfo'
 
 let steamCall = require('../fakeNews').response
 
@@ -14,6 +15,7 @@ class UserPage extends Component {
         super(props)
         this.state = {
             currentUserId: null,
+            currentUserSummary: null,
             services: [{
                 name: 'steam',
                 style: {
@@ -135,7 +137,7 @@ class UserPage extends Component {
                     HEADER
                 </div>
                 <div className = "row">
-                    USER INFO
+                    <UserInfo />
                 </div>
                 <div className = "row">
                     < ServiceButtonBar services = { this.state.services }/>
