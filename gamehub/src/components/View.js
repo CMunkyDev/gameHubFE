@@ -242,6 +242,12 @@ class View extends Component {
         })
     }
 
+    userSearch = (event) => {
+        event.preventDefault()
+        const searchValue = document.getElementById('userSearch')[0].value
+        console.log(searchValue)
+    }
+
     storeSteamId(params){
         let steamID = params.get('openid.identity').slice(-17)
         return axios.post(`${process.env.REACT_APP_API_URL}/api/users/${this.state.currentUser.id}`, { users_service_id: steamID })
@@ -251,7 +257,7 @@ class View extends Component {
         console.log(this.state)
         return (
             <div>
-                <UserPage changeUserQuery={this.changeUserQuery} bigState={this.state} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutUser={this.logoutUser} />
+                <UserPage bigState={this.state} userSearch={this.userSearch} loginFormCallback={this.loginFormCallback} registrationFormCallback={this.registrationFormCallback} logoutUser={this.logoutUser} />
             </div>
         )
     }

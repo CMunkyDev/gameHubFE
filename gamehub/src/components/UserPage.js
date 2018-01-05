@@ -16,7 +16,7 @@ class UserPage extends Component {
         return (
             <div className = "container-fluid">
                 <div className = "row">
-                    <Header changeUserQuery={this.props.changeUserQuery} loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUserId={this.props.bigState.currentUser.id}/>
+                    <Header userSearch={this.props.userSearch} loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUserId={this.props.bigState.currentUserId}/>
                     <UserInfo />
                 </div>
                 <div className = "row">

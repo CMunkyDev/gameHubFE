@@ -3,6 +3,10 @@ import LoginModal from './LoginModal'
 import TextField from 'material-ui/TextField'
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar'
 
+const hiddenButton = {
+    display: 'none'
+}
+
 class Header extends Component {
 
     render(){
@@ -18,7 +22,10 @@ class Header extends Component {
                 <ToolbarGroup>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <TextField hintText="User Search..." />
+                    <form id="userSearch" onSubmit={this.props.userSearch}>
+                        <TextField hintText="User Search..."/>
+                        <input type='submit' style={hiddenButton} />
+                    </form>
                 </ToolbarGroup>
                 <ToolbarGroup>
                     <LoginModal loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUserId={this.props.currentUserId}/>
