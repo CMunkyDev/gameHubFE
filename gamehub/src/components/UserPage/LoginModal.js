@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import Dialog from 'material-ui/Dialog';
-import Paper from 'material-ui/Paper'
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import { Tabs, Tab } from 'material-ui/Tabs';
-import axios from 'axios'
+import Dialog from 'material-ui/Dialog'
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+import { Tabs, Tab } from 'material-ui/Tabs'
 
 class LoginModal extends Component {
     constructor(props) {
@@ -96,6 +93,7 @@ class LoginModal extends Component {
 
     handleSubmit = (postRequestCallback, formKey) => {
         return (event) => {
+            event.preventDefault()
             let formObject = {}
             let valid = true
             for (let key in this.state[formKey]) {
@@ -109,15 +107,15 @@ class LoginModal extends Component {
                                 this.setState(prev => {
                                     return {
                                         ...prev,
+                                        login: this.login,
                                         open: false
                                     }
                                 })
                             } else if (formKey === 'registration') {
-                                this.setState(prev => {
-                                    this.clearSignup()
-                                    console.log('what')
+                                this.setState(prev => {                                    
                                     return {
                                         ...prev,
+                                        registration: this.registration,
                                         currentError: "Account created!  Please login.",
                                         errorColor: "green"
                                     }
@@ -146,18 +144,9 @@ class LoginModal extends Component {
         this.setState({currentError: ''})
     }
 
-    clearSignup = () => {
-        this.setState(prev => {
-            return {
-                ...prev,
-                registration: this.registration
-            }
-        })
-    }
-
     render() {
         return (
-            <div>
+            <div className='loginButton'>
                 { !this.props.currentUserId ? <RaisedButton label="Login/Signup" onClick={this.handleOpen} /> : <RaisedButton label="Logout" onClick={this.props.logoutFunction} /> }
                 <Dialog
                     modal={false}
@@ -167,7 +156,7 @@ class LoginModal extends Component {
                 >
                     <Tabs>
                         <Tab label="Login" onActive={this.clearError}>
-                            <form id = "login" >
+                            <form id = "login" onSubmit={this.handleSubmit(this.props.loginFormCallback, 'login')}>
                                 <TextField
                                     type="email"
                                     name="email"
@@ -187,13 +176,13 @@ class LoginModal extends Component {
                                     hintText="Password"
                                 />
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
-                                    <RaisedButton label={'Cancel'} onClick={this.handleClose} />
-                                    <RaisedButton label={'Submit'} onClick={this.handleSubmit(this.props.loginFormCallback, 'login')}/>
+                                    <RaisedButton label={'Cancel'} onClick={this.handleClose}/>
+                                    <RaisedButton type='submit' label={'Submit'}/>
                                 </div>
                             </form>
                         </Tab>
                         <Tab label="Signup" onActive={this.clearError}>
-                            <form id = "registration" >
+                            <form id = "registration" onSubmit={this.handleSubmit(this.props.registrationFormCallback, 'registration')}>
                                 <TextField
                                     type="email"
                                     name="email"
@@ -232,7 +221,7 @@ class LoginModal extends Component {
                                 />
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
                                     <RaisedButton label={'Cancel'} onClick={this.handleClose}/>
-                                    <RaisedButton label={'Submit'} onClick={this.handleSubmit(this.props.registrationFormCallback, 'registration')}/>
+                                    <RaisedButton type='submit' label={'Submit'}/>
                                 </div>
                             </form>
                         </Tab>
