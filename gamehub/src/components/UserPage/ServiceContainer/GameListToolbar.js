@@ -8,29 +8,51 @@ import FlatButton from 'material-ui/FlatButton'
 class GameListToolbar extends Component {
     constructor (props) {
         super(props)
-        this.arrowIconDown = 'DESC'
-        this.arrowIconUp = 'ASC'
+        this.sortDirections = ['ASC', 'DESC']
+        this.toggleSortDirection = this.toggleSortDirection.bind(this)
+        this.showUnplayedToggle = this.showUnplayedToggle.bind(this)
+    }
 
-        this.state = {
-            nameSortButtonIcon: this.arrowIconUp,
-            timeSortButtonIcon: this.arrowIconUp
+    toggleSortDirection (event) {
+        let direction = this.sortDirections.filter(direction => direction !== this.props.sortDirection.toUpperCase())[0]
+        this.props.toolbarFun.changeSortDirection(direction)
+    }
+
+    handleSortClick (key) {
+        return (event) => {
+            this.props.toolbarFun.changeSortKey(key)
         }
+    }
+
+    colorIf(name, prop = this.props.sortKey, color = '#0af') {
+        return name == prop ? {color} : {}
+    }
+
+    showUnplayedToggle(event, newVal) {
+        if (newVal) {
+            this.props.toolbarFun.removeFilterKey('playtime_forever')
+        } else if (!newVal) {
+            this.props.toolbarFun.addFilterKey('playtime_forever')
+        }
+    }
+
+    handleSearchChange = (event, query) => {
+        this.props.toolbarFun.changeSearchQuery(query)
     }
 
     render () {
         return (
             <Toolbar >
                 <ToolbarGroup style={{ display: 'flex', width: '28%'}}>
-                    <FlatButton label="Game Name"/>
-                    <FlatButton label={this.state.nameSortButtonIcon}/>
-                    <FlatButton label="Time Played" />
-                    <FlatButton label={this.state.timeSortButtonIcon} />
+                    <FlatButton style={this.colorIf('name')} label="Game Name" onClick={this.handleSortClick('name')}/>
+                    <FlatButton style={this.colorIf('time')} label="Time Played" onClick={this.handleSortClick('time')}/>
+                    <FlatButton label={this.props.sortDirection} onClick={this.toggleSortDirection} />
                 </ToolbarGroup>
                 <ToolbarGroup style={{ display: 'flex', width: '18%'}}>
-                    <Toggle label='Show Unplayed Games'/>
+                    <Toggle label='Show Unplayed Games' onToggle={this.showUnplayedToggle}/>
                 </ToolbarGroup>
                 <ToolbarGroup style={{ display: 'flex', width: '28%' }}>
-                    <TextField hintStyle={{color:'pink'}} hintText='Search...'/>
+                    <TextField hintStyle={{color:'pink'}} hintText='Search...' onChange={this.handleSearchChange}/>
                 </ToolbarGroup>
             </Toolbar>
         )

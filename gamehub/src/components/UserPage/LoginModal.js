@@ -126,7 +126,6 @@ class LoginModal extends Component {
                         }
                     )
                     .catch(error => {
-<<<<<<< HEAD
                         if (!error.response) {
                             //SERVER NOT UP
                             console.log('SERVER DOWN?')
@@ -138,15 +137,6 @@ class LoginModal extends Component {
                                 }
                             })
                         }
-=======
-                        this.setState(prev => {
-                            console.log(error)
-                           return {
-                                ...prev,
-                                currentError: error.response.data.message
-                            }
-                        })
->>>>>>> 1181eac8d5d75897d937a4180f0402061d87d9ba
                     })
             }
         }
