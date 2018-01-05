@@ -17,20 +17,11 @@ class View extends Component {
                 name: 'steam',
                 style: {
                     tab: {
-<<<<<<< HEAD
                         backgroundColor: '#181A21',
-<<<<<<< HEAD
-                        color: '#BBBBBB'
-=======
                         color: '#BBB'
->>>>>>> 07a2aac1fde9bbd5aa4d4f55a9cdff7b085ccc58
-=======
-                        backgroundColor: '#9099A2',
-                        color: '#FFF'
->>>>>>> any-user
                     },
                     row: {
-                        backgroundColor: '#9099A2',
+                        backgroundColor: '#181A21',
                         color: '#FFF'
                     }
                 },
