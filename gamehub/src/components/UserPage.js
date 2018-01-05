@@ -9,11 +9,6 @@ import BottomBar from './UserPage/BottomBar'
 class UserPage extends Component {
     constructor(props){
         super(props)
-        this.state = {
-            currentUserId: this.props.bigState.currentUserId,
-            services: this.props.bigState.services,
-            currentService: this.props.bigState.currentService
-        }
     }
 
     render () {
@@ -27,10 +22,10 @@ class UserPage extends Component {
                     USER INFO
                 </div>
                 <div className = "row">
-                    < ServiceButtonBar services = { this.state.services }/>
+                    < ServiceButtonBar services = { this.props.bigState.services }/>
                 </div>
                 <div className = "row">
-                    < ServiceContainer currentUserId={this.state.currentUserId} service={this.state.services[this.state.currentService]}/>
+                    < ServiceContainer currentUserId={this.props.bigState.currentUserId} service={this.props.bigState.services[this.props.bigState.currentService]}/>
                 </div>
                 <div className = "row">
                     <BottomBar />
