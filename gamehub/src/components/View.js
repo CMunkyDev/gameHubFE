@@ -12,11 +12,11 @@ class View extends Component {
                 name: 'steam',
                 style: {
                     tab: {
-                        backgroundColor: '#9099A2',
-                        color: '#FFF'
+                        backgroundColor: '#181A21',
+                        color: '#BBBBBB'
                     },
                     row: {
-                        backgroundColor: '#9099A2',
+                        backgroundColor: '#181A21',
                         color: '#FFF'
                     }
                 },
@@ -26,6 +26,16 @@ class View extends Component {
             }],
             currentService: 0
         }
+    }
+
+    parseUserInfoResponse (body) {
+        let summary = body[0].response.players[0]
+        let ownedGames = body[1].response.games
+        let friendList = body[2].friendslist.friends
+        let recentlyPlayed = body[3].response.games
+        let playerBans = body[4].players[0]
+
+        return {summary, ownedGames, friendList, recentlyPlayed, playerBans}
     }
 
     componentDidMount () {
