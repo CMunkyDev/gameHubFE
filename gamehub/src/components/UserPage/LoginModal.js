@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
+import Snackbar from 'material-ui/Snackbar'
 import { Tabs, Tab } from 'material-ui/Tabs'
 
 class LoginModal extends Component {
@@ -47,7 +48,7 @@ class LoginModal extends Component {
             login: this.login,
             open: false,
             currentError : '',
-            errorColor: 'red'
+            snackOpen: false
         }
     }
 
@@ -62,6 +63,10 @@ class LoginModal extends Component {
             open: false,
             currentError: ''
         });
+    }
+
+    snackClose = () => {
+        this.setState({ snackOpen: false })
     }
 
     jankyPasswordCheckFix = firstPasswordInput => {
@@ -116,8 +121,7 @@ class LoginModal extends Component {
                                     return {
                                         ...prev,
                                         registration: this.registration,
-                                        currentError: "Account created!  Please login.",
-                                        errorColor: "green"
+                                        currentError: "Account created!  Please login."
                                     }
                                 })
                             }
@@ -140,12 +144,17 @@ class LoginModal extends Component {
         }
     }
 
+    componentWillUpdate = (nextProps, nextState) => {
+        if (this.state.currentError !== nextState.currentError && nextState.currentError !== ''){
+            nextState.snackOpen = true
+        }
+    }
+
     clearError = () => {
         this.setState({currentError: ''})
     }
 
     render() {
-        console.log('->', this.props)
         return (
             <div className='loginButton'>
                 { !this.props.currentUser.id ? <RaisedButton label="Login/Signup" onClick={this.handleOpen} /> : <RaisedButton label="Logout" onClick={this.props.logoutUser} /> }
@@ -227,12 +236,13 @@ class LoginModal extends Component {
                             </form>
                         </Tab>
                     </Tabs>
-                    <div style={{textAlign: 'center'}}>
-                        <div style={{color: this.state.errorColor}}>
-                            {this.state.currentError}
-                        </div>
-                    </div>
                 </Dialog>
+                <Snackbar
+                  open={this.state.snackOpen}
+                  message={this.state.currentError}
+                  autoHideDuration={4000}
+                  onRequestClose={this.snackClose}
+                />
             </div>
         )
     }
