@@ -8,18 +8,22 @@ import UserInfo from './UserPage/UserInfo'
 //let steamCall = require('../fakeNews').response
 
 class UserPage extends Component {
+    constructor (props) {
+        super(props)
+    }
+
     render () {
         return (
             <div className = "container-fluid">
                 <div className = "row">
-                    <Header loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUserId={this.props.bigState.currentUserId}/>
+                    <Header loginFormCallback={this.props.loginFormCallback} registrationFormCallback={this.props.registrationFormCallback} logoutUser={this.props.logoutUser} currentUserId={this.props.bigState.currentUser.id}/>
                     <UserInfo />
                 </div>
                 <div className = "row">
-                    < ServiceButtonBar currentUserId={this.props.bigState.currentUserId} services = { this.props.bigState.services }/>
+                    < ServiceButtonBar user={this.props.bigState.currentPageUser || {}} services = { this.props.bigState.services }/>
                 </div>
                 <div className = "row">
-                    < ServiceContainer currentUserId={this.props.bigState.currentUserId} service={this.props.bigState.services[this.props.bigState.currentService]}/>
+                    < ServiceContainer user={this.props.bigState.currentPageUser || {}} service={this.props.bigState.services[this.props.bigState.currentService]}/>
                 </div>
                 <div className = "row">
                     <BottomBar />
