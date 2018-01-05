@@ -124,12 +124,17 @@ class LoginModal extends Component {
                         }
                     )
                     .catch(error => {
-                        this.setState(prev => {
-                           return {
-                                ...prev,
-                                currentError: error.response.data.message
-                            }
-                        })
+                        if (!error.response) {
+                            //SERVER NOT UP
+                            console.log('SERVER DOWN?')
+                        } else {
+                            this.setState(prev => {
+                                return {
+                                    ...prev,
+                                    currentError: error.response.data.message
+                                }
+                            })
+                        }
                     })
             }
         }
