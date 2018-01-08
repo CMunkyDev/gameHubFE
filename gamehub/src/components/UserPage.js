@@ -13,7 +13,6 @@ class UserPage extends Component {
     }
 
     render () {
-        console.log('userpage',this.props.bigState)
         return (
             <div className = "container-fluid">
                 <div className = "row">
