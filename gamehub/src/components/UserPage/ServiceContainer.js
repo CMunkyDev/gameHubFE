@@ -142,7 +142,6 @@ class ServiceContainer extends Component {
   
 //PRETENDING WE ARE HITTING EACH TIME
   render(){
-    console.log('props', this.props)
     if (this.props.currentUser && this.props.currentUser.steamInfo) {
       if (this.props.currentUser.steamInfo.gameList && this.props.currentUser.steamInfo.gameList.length !== this.state.userGames.length) {
         this.setState(prev => {
