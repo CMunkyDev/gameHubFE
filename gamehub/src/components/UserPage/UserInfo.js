@@ -25,11 +25,9 @@ import Paper from 'material-ui/Paper'
 
 
 const UserInfo = (props) => {
-    console.log(props)
     if (!props.user || !props.user.username) return ''
     let username = props.user.username
     if (props.user.steamInfo.userInfo) {
-        console.log('summary: ',props.user.steamInfo.userInfo)
         var {
             avatar,
             avatarfull,

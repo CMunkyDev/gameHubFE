@@ -142,14 +142,15 @@ class ServiceContainer extends Component {
   
 //PRETENDING WE ARE HITTING EACH TIME
   render(){
-    if (this.props.user && this.props.user.steamInfo) {
-      if (this.props.user.steamInfo.gameList && this.props.user.steamInfo.gameList.length !== this.state.userGames.length) {
+    console.log('props', this.props)
+    if (this.props.currentUser && this.props.currentUser.steamInfo) {
+      if (this.props.currentUser.steamInfo.gameList && this.props.currentUser.steamInfo.gameList.length !== this.state.userGames.length) {
         this.setState(prev => {
-          return { ...prev, userGames: this.props.user.steamInfo.gameList ? [...this.props.user.steamInfo.gameList] : [], sortedNFilteredGames: this.props.user.steamInfo.gameList ? [...this.props.user.steamInfo.gameList] : [] }
+          return { ...prev, userGames: this.props.currentUser.steamInfo.gameList ? [...this.props.currentUser.steamInfo.gameList] : [], sortedNFilteredGames: this.props.currentUser.steamInfo.gameList ? [...this.props.currentUser.steamInfo.gameList] : [] }
         })
       } else {
       }
-      if (this.props.user.steamId) {
+      if (this.props.currentUser.steamId) {
         return (
           <div className="min-height">
             <GameListToolbar toolbarFun={this.toolbarFun} sortKey={this.state.sortKey} sortDirection={this.state.sortDirection} />
@@ -160,15 +161,6 @@ class ServiceContainer extends Component {
             </List>
           </div>
         )
-      } else if (this.props.userId) {
-        return (
-          <div className="noGames min-height">
-            <p>It looks like you don't have any {this.capitalize(this.props.service.name)} games.  Click the button to connect to your {this.capitalize(this.props.service.name)} account!</p>
-            <form action="http://localhost:3001/steam/auth" method="post">
-              <RaisedButton type='submit'>Connect with {this.capitalize(this.props.service.name)}</RaisedButton>
-            </form>
-          </div>
-        )
       } else {
         return (
           <div className='splashScreen'>
@@ -177,6 +169,15 @@ class ServiceContainer extends Component {
           </div>
         )
       }
+    } else if (this.props.currentUser.id && !this.props.currentUser.steamId) {
+      return (
+        <div className="noGames min-height">
+            <p>It looks like you don't have any {this.capitalize(this.props.service.name)} games.  Click the button to connect to your {this.capitalize(this.props.service.name)} account!</p>
+            <form action="http://localhost:3001/steam/auth" method="post">
+              <RaisedButton type='submit'>Connect with {this.capitalize(this.props.service.name)}</RaisedButton>
+            </form>
+          </div>
+        )
     } else {
       return (
         <div className='splashScreen'>

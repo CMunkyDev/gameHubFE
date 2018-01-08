@@ -13,8 +13,7 @@ class UserPage extends Component {
     }
 
     render () {
-        console.log('BS: ',this.props.bigState)
-        console.log('CPU: ',this.props.bigState.currentPageUser)
+        console.log('userpage',this.props.bigState)
         return (
             <div className = "container-fluid">
                 <div className = "row">
@@ -25,7 +24,7 @@ class UserPage extends Component {
                     < ServiceButtonBar user={this.props.bigState.currentPageUser || {}} services = { this.props.bigState.services }/>
                 </div>
                 <div className = "row">
-                    < ServiceContainer user={this.props.bigState.currentPageUser || {}} service={this.props.bigState.services[this.props.bigState.currentService]}/>
+                    < ServiceContainer currentUser={this.props.bigState.currentUser} user={this.props.bigState.currentPageUser || {}} service={this.props.bigState.services[this.props.bigState.currentService]}/>
                 </div>
                 <div className = "row">
                     <BottomBar />
