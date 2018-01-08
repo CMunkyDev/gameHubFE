@@ -122,31 +122,7 @@ class View extends Component {
         await this.getAllCurrentUserInfo()
         await this.getAllCurrentUserInfo()
     }
-                        // if (currentUser.steamId) {
-                            
-    //                     } else {
 
-    //                     }
-    //                     this.setState(prev => { return { ...prev, currentUser: { ...prev.currentUser, ...response.data.currentUser } } })
-    //                     this.addTokenToHeader()
-    //                     let fullUrl = new URL(window.location)
-    //                     let searchParams = fullUrl.searchParams
-    //                     window.history.replaceState({}, document.title, "/")
-    //                     if (searchParams.get("openid.identity")) {
-    //                         return this.storeSteamId(searchParams).then(result => axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`))
-    //                     } else {
-    //                         return axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${response.data.currentUser.id}`)
-    //                     }
-    //                 })
-    //                 .then(idResponse => {
-    //                     if (idResponse.data.steamId) {
-    //                         this.addTokenToHeader()
-                            
-    //                     }
-    //                 }) 
-    //         }
-    //     }
-    // }
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.currentPageUsername !== this.state.currentPageUsername) {
            this.getCurrentPageUser()
@@ -189,6 +165,7 @@ class View extends Component {
         //             }
         //         }) 
         // }
+
     }
     addTokenToHeader () {
         let token = localStorage.getItem('gamehubToken')
