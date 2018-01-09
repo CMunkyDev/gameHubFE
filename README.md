@@ -17,6 +17,9 @@ You'll also need to setup and run the back end, which can be found [here](https:
 ## Built With
 
 * [ES6](http://es6-features.org/) - Javascript ES6
+* [React](https://reactjs.org/) - React
+* [Node.js](https://nodejs.org/en/) - Node
+* [PostgreSQL](https://www.postgresql.org/) - PostgreSQL
 
 ## Authors
 
