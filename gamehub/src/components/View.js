@@ -140,8 +140,6 @@ class View extends Component {
             await this.storeSteamId(searchParams)
                 .then(result => axios.get(`${process.env.REACT_APP_API_URL}/steam/auth/${this.state.currentUser.id}`))
                 .then(response => {
-                    console.log(response.data.steamId.users_service_id)
-                    console.log(this.state.currentUser)
                     this.setState(prev => { return {
                                 ...prev,
                                 currentUser: {
